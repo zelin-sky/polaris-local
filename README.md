@@ -1,27 +1,71 @@
 # polaris-local
-Polaris IQ Home devices integration to Home Assistant using the UDP protocol
 
-## Описание
-Это тестовый вариант интеграции.
-Пока поддерживаются все чайники Polaris.
-Работает с Облаком и приложением одновременно. Если включить mqtt, то соответственно с облаком больше не работает а одновременно с mqtt работает.
+Інтеграція пристроїв Polaris IQ Home у Home Assistant за допомогою протоколу UDP
 
-Что было сделано:
-- Протокол "завернут" для работы в составе интеграции
-- В интеграции теперь используется глобальный координатор
-- Решена проблема восстановления соединения после обрыва связи (чайник поднят с подставки)
-- Добавлен поиск новых устройств
+## Опис
 
-С чем надо разобраться:
-- Как разделить интеграцию на Полярис и Русклимат? Устройства обоих обнаруживаюся по одному имени _syncleo._udp.local
-- Для добавления новых устройств надо исследовать как в протоколе упаковываюся данные (для переключателей только все понятно), надо смотреть логи, чтобы добавлять в протокол
+Це тестова версія інтеграції.
 
-## Как получить токен устройства Polaris
-В приложении делимся устройством - сохраняем скриншот с QR кодом - сканируем скриншот любой программой - получаем текст вида:
+Наразі підтримуються всі чайники Polaris.
+
+Працює одночасно з хмарою та застосунком. Якщо увімкнути MQTT, то з хмарою інтеграція більше не працює, але водночас працює з MQTT.
+
+Що було зроблено:
+
+* Протокол адаптовано для роботи у складі інтеграції.
+* В інтеграції тепер використовується глобальний координатор.
+* Вирішено проблему відновлення з'єднання після обриву зв'язку (чайник знято з підставки).
+* Додано пошук нових пристроїв.
+
+Що потребує доопрацювання:
+
+* Як розділити інтеграцію на Polaris та Русклімат? Пристрої обох виробників виявляються за одним іменем `_syncleo._udp.local`.
+* Для додавання нових пристроїв необхідно дослідити, як дані упаковуються в протоколі (для перемикачів усе зрозуміло). Потрібно переглянути логи, щоб додати підтримку до протоколу.
+
+## Як отримати токен пристрою Polaris
+
+У застосунку потрібно поділитися пристроєм, зберегти скриншот із QR-кодом і просканувати скриншот будь-якою програмою.
+
+Отримаємо текст такого вигляду:
+
 `polaris://device-share/polaris/70/aabbccddeeff?token=111222333444555666777888999000ab&name=PUH-9105&attributes_appearance=9105`
-где `111222333444555666777888999000ab` токен устройства (32 символа).
 
-## Благодарности
-Эта интеграция создана с использованием методов описанных в репозитории [polaris_pwk_1725cgld](https://github.com/gch1p/polaris_pwk_1725cgld).<br>
-Спасибо автору [gch1p](https://github.com/gch1p).
+Токен пристрою Polaris — це значення параметра `token`, у цьому прикладі `111222333444555666777888999000ab` (32 символи).
 
+
+
+-------------------------------------------------------------------------------------------------------------
+
+# polaris-local
+
+Polaris IQ Home devices integration for Home Assistant using the UDP protocol
+
+## Description
+
+This is a test version of the integration.
+
+Currently, all Polaris kettles are supported.
+
+It works with the cloud and the app simultaneously. If MQTT is enabled, the integration no longer works with the cloud, but works with MQTT instead.
+
+What has been done:
+
+* The protocol has been wrapped for use as part of the integration.
+* The integration now uses a global coordinator.
+* The connection recovery issue has been resolved after a connection interruption (the kettle is lifted off its base).
+* Device discovery has been added.
+
+What still needs to be investigated:
+
+* How to separate the integration into Polaris and Rusklimat? Devices from both manufacturers are discovered under the same name: `_syncleo._udp.local`.
+* To add support for new devices, it is necessary to investigate how data is packed in the protocol (everything is clear for switches). The logs need to be examined to add support to the protocol.
+
+## How to Obtain a Polaris Device Token
+
+In the app, share the device, save a screenshot of the QR code, and scan the screenshot using any QR code scanner.
+
+You will get text in the following format:
+
+`polaris://device-share/polaris/70/aabbccddeeff?token=111222333444555666777888999000ab&name=PUH-9105&attributes_appearance=9105`
+
+The Polaris device token is the value of the `token` parameter. In this example, it is `111222333444555666777888999000ab` (32 characters).
