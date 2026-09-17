@@ -61,10 +61,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain="syncleo_kettle"):
             description = f"{device['devtype']}: {device['mac']}"
             if device['vendor'] != 'Unknown':
                 description += f" ({device['vendor']}"
-                if int(device['basetype']) in POLARIS_DEVICE:
-                    description += f" {POLARIS_DEVICE[int(device['basetype'])]['model']}"
+                basetype = device.get('basetype', '')
+                if str(basetype).isdigit() and int(basetype) in POLARIS_DEVICE:
+                    description += f" {POLARIS_DEVICE[int(basetype)]['model']}"
                 else:
-                    description += f" Unknown"
+                    description += " Unknown"
                 description += ")"
 
 #            description = f"{device['devtype']}: {device['mac']}"
@@ -235,4 +236,5 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any], discovered_d
         _LOGGER.error("Validation failed: %s", err)
         raise ConnectionError(f"Cannot connect to device: {err}") from err
     
-    return {"title": f"{discovered_devices[mac]['vendor']} {POLARIS_DEVICE[int(devtype)]['model']} {mac}"}
+    device_info = POLARIS_DEVICE.get(int(devtype), {"model": f"Unknown (devtype {devtype})"})
+    return {"title": f"{discovered_devices[mac]['vendor']} {device_info['model']} {mac}"}
